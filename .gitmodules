@@ -1,0 +1,3 @@
+[submodule "MoneyGram-backend"]
+	path = MoneyGram-backend
+	url = https://github.com/abarghazmedo/MoneyGram-backend.git
