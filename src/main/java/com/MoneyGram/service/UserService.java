@@ -17,6 +17,7 @@ public class UserService {
 	
 	@Autowired	
 	private UserRepository repository;
+
 	
 	//CRUD create , read , update , delete
 
@@ -25,6 +26,15 @@ public class UserService {
 		return repository.save(user);
 	}
 	
+//	public boolean authenticateUser(String username, String rawPassword) {
+//	    User user = repository.findByUsername(username);
+//	    if (user != null && rawPassword.equals(user.getPassword())) {
+//	        return true;
+//	    }
+//	    return false;
+//	}
+	
+
 
 	public List<User> findAllUsers(){
 		return repository.findAll();
@@ -39,6 +49,14 @@ public class UserService {
 //		return repository.getUsersByName(name);
 //	}
 
+	public boolean authenticateUser(User user) {
+	    User u = repository.findByEmail(user.getEmail());
+	    if (user != null && user.getPassword().equals(u.getPassword())) {
+	        return true;
+	    }
+	    return false;
+	}
+	
 	public User updatUser(User userRequest) {
 		
 		 User existingUser =repository.findById(userRequest.getUserId()).get();
