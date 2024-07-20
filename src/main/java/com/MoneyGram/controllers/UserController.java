@@ -20,10 +20,6 @@ import com.MoneyGram.model.User;
 import com.MoneyGram.service.UserService;
 
 
-
-
-
-
 @RestController
 @RequestMapping("/user")//path
 public class UserController {
@@ -41,17 +37,16 @@ public class UserController {
 		return service.addUser(user);
 	}
 	
-
+    @PostMapping("/login")
+    public String login(@RequestBody User user) {
+        boolean authenticated = service.authenticateUser(user);
+        if (authenticated) {
+            return "True";
+        } else {
+            return "False";
+        }
+    }
 	
-//    @PostMapping("/login")
-//    public ResponseEntity<String> loginUser(@RequestBody User user) {
-//        boolean isAuthenticated = service.authenticateUser(user.getEmail(), user.getPassword());
-//        if (isAuthenticated) {
-//            return ResponseEntity.ok("User logged in successfully");
-//        } else {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
-//        }
-//    }
 	
 	@GetMapping("/all")
 	public List<User> getUsers(){
@@ -74,15 +69,7 @@ public class UserController {
 		return service.updatUser(user);
 	}
 	
-    @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        boolean authenticated = service.authenticateUser(user);
-        if (authenticated) {
-            return "True";
-        } else {
-            return "False";
-        }
-    }
+
 	
 	@DeleteMapping("/delete/{userId}")
 	public String deleteUser(@PathVariable String userId) {		
